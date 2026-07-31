@@ -1,0 +1,36 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+*.stackdump
+
+# Editor & IDE Configs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Environment & Sensitive Credentials
+.env
+.env.local
+.env.*.local
+*.config.php.local
+
+# Logs and Temporaries
+*.log
+logs/
+tmp/
+temp/
+cache/
+
+# Vendor & Dependencies
+vendor/
+node_modules/
+
+# Uploads / Dynamic User Content (keep folder structure if needed)
+uploads/*
+!uploads/.gitkeep

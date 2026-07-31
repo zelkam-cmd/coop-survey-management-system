@@ -1,0 +1,126 @@
+/* ============================================================
+   CampusVoice — Print Stylesheet
+   Used for printable reports via window.print()
+   ============================================================ */
+
+@media print {
+    /* Hide non-printable elements */
+    .app-sidebar,
+    .app-header,
+    .app-footer,
+    .sidebar-overlay,
+    .hamburger-btn,
+    .btn,
+    .breadcrumbs,
+    .toast-container,
+    .modal-overlay,
+    .no-print,
+    .content-actions,
+    .search-bar,
+    .pagination,
+    .data-table-header,
+    .data-table-footer {
+        display: none !important;
+    }
+
+    /* Reset layout */
+    body {
+        background: white;
+        color: black;
+        font-size: 12pt;
+        line-height: 1.5;
+    }
+
+    .app-layout {
+        display: block;
+    }
+
+    .app-main {
+        margin-left: 0;
+    }
+
+    .app-content {
+        padding: 0;
+        max-width: 100%;
+    }
+
+    /* Cards / containers */
+    .card,
+    .report-container,
+    .chart-container {
+        border: 1px solid #ddd;
+        box-shadow: none;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* Tables */
+    .data-table th {
+        background: #f5f5f5 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .data-table td,
+    .data-table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    /* Report header */
+    .report-header {
+        border-bottom: 2px solid black;
+    }
+
+    .report-title {
+        font-size: 18pt;
+    }
+
+    /* Charts - print at current size */
+    canvas {
+        max-width: 100%;
+        page-break-inside: avoid;
+    }
+
+    /* Links */
+    a {
+        color: black;
+        text-decoration: none;
+    }
+
+    /* Page breaks */
+    .page-break {
+        page-break-before: always;
+    }
+
+    .no-break {
+        page-break-inside: avoid;
+    }
+
+    /* Print header/footer */
+    @page {
+        margin: 1.5cm;
+        size: A4;
+    }
+
+    /* Show print-only elements */
+    .print-only {
+        display: block !important;
+    }
+
+    /* Stat cards for print */
+    .stat-card {
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+
+    /* Badges */
+    .badge {
+        border: 1px solid currentColor;
+    }
+}
+
+/* Hide print-only elements on screen */
+.print-only {
+    display: none;
+}
