@@ -1204,3 +1204,14 @@
     background: var(--color-gray-100);
     color: var(--color-gray-700);
 }
+
+.quick-actions-card, 
+.announcements-card {
+    border-top: 4px solid var(--primary-color, #0056b3); /* Adjust variable to match your brand blue */
+    background-color: #f8faff; /* Very subtle blue tint */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Slightly stronger shadow to lift it off the page */
+}
+
+.announcements-card .icon-bell {
+    color: var(--accent-color, #6f42c1);
+}

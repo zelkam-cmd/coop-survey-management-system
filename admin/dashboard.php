@@ -44,6 +44,30 @@ $recentSurveys = $stmt->fetchAll();
 $flaggedConcerns = getFlaggedConcerns();
 $recommendations = getAutoRecommendations();
 
+// --- FLAGGED CONCERNS LOGIC FIX ---
+// Define positive questions that shouldn't trigger a red flag if answered "Yes"
+$positive_questions = [
+    'Are the library operating hours sufficient for your needs?',
+    'Are you aware of the campus emergency protocols?'
+];
+
+// Filter out the false positives
+$filteredConcerns = [];
+foreach ($flaggedConcerns as $c) {
+    $isPositiveFalseAlarm = false;
+    foreach ($positive_questions as $pq) {
+        if (strpos($c['message'], $pq) !== false && strpos($c['message'], "'Yes'") !== false) {
+            $isPositiveFalseAlarm = true;
+            break;
+        }
+    }
+    if (!$isPositiveFalseAlarm) {
+        $filteredConcerns[] = $c;
+    }
+}
+$flaggedConcerns = $filteredConcerns;
+// --- END LOGIC FIX ---
+
 // Activity Feed
 $stmt = $pdo->query("SELECT * FROM activity_logs ORDER BY created_at DESC LIMIT 6");
 $activityLogs = $stmt->fetchAll();
@@ -104,7 +128,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <div class="dashboard-grid">
-    <!-- Main Column -->
+    <!-- Main Column (Left Side) -->
     <div>
         <!-- Recent Surveys Table -->
         <div class="card" style="margin-bottom: var(--space-6);">
@@ -152,7 +176,7 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
 
         <!-- Participation Gauge & Trend Charts -->
-        <div class="chart-grid">
+        <div class="chart-grid" style="margin-bottom: var(--space-6);">
             <div class="chart-container">
                 <div class="chart-header">
                     <div class="chart-title">Participation Rate</div>
@@ -171,9 +195,34 @@ require_once __DIR__ . '/../includes/header.php';
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Sidebar Column -->
+        <!-- Quick Post Announcement Widget (MOVED HERE TO MAIN COLUMN) -->
+        <div class="card" style="border-top: 4px solid var(--secondary-color, #28a745);">
+            <div class="card-header pb-0 border-0 bg-transparent">
+                <h4 class="card-title mb-0" style="padding-top: var(--space-3);"><i class="icon-edit"></i> Quick Post</h4>
+                <p class="text-muted" style="font-size: var(--font-size-xs); margin-bottom: 0;">Broadcast a message to student dashboards instantly.</p>
+            </div>
+            <div class="card-body">
+                <form action="/CampusVoice/admin/notifications.php" method="POST">
+                    <div class="form-group" style="margin-bottom: var(--space-3);">
+                        <input type="text" name="title" class="form-control" placeholder="Announcement Title" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: var(--space-3);">
+                        <textarea name="content" class="form-control" rows="3" placeholder="What do you want to tell the campus?" required></textarea>
+                    </div>
+                    <div class="form-group" style="margin-bottom: var(--space-3);">
+                        <select name="target" class="form-control">
+                            <option value="all">Target: All Users</option>
+                            <option value="students">Target: Students Only</option>
+                        </select>
+                    </div>
+                    <button type="submit" name="post_announcement" class="btn btn-primary w-100">Publish Announcement</button>
+                </form>
+            </div>
+        </div>
+    </div> <!-- End Main Column -->
+
+    <!-- Sidebar Column (Right Side) -->
     <div>
         <!-- Flagged Concerns -->
         <div class="card" style="margin-bottom: var(--space-5);">
@@ -216,7 +265,7 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
 
         <!-- Recent Activity Feed -->
-        <div class="card">
+        <div class="card" style="margin-bottom: var(--space-5);">
             <div class="card-header">
                 <h3 class="card-title">Activity Feed</h3>
             </div>
@@ -236,8 +285,9 @@ require_once __DIR__ . '/../includes/header.php';
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
+    </div> <!-- End Sidebar Column -->
+</div> <!-- End Dashboard Grid -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

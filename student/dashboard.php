@@ -157,7 +157,7 @@ require_once __DIR__ . '/../includes/header.php';
     <!-- Announcements & Quick Actions -->
     <div>
         <!-- Quick Actions -->
-        <div class="card" style="margin-bottom: var(--space-5);">
+        <div class="card quick-actions-card" style="margin-bottom: var(--space-5);">
             <div class="card-header">
                 <h3 class="card-title">Quick Actions</h3>
             </div>
@@ -178,7 +178,7 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
 
         <!-- Announcements -->
-        <div class="card">
+        <div class="card announcements-card">
             <div class="card-header">
                 <h3 class="card-title">📢 Announcements</h3>
             </div>
