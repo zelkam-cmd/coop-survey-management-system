@@ -8,7 +8,7 @@ requireAdmin();
 require_once __DIR__ . '/../../utils/helpers.php';
 require_once __DIR__ . '/../../utils/stats.php';
 
-$surveyId = (int)($_GET['id'] ?? 0);
+$surveyId = (int) ($_GET['id'] ?? 0);
 $pdo = db();
 
 recalculateSurveyResults($surveyId);
@@ -23,7 +23,7 @@ if (!$survey) {
 
 $stmt = $pdo->prepare("SELECT COUNT(DISTINCT student_id) FROM responses WHERE survey_id = ?");
 $stmt->execute([$surveyId]);
-$totalRespondents = (int)$stmt->fetchColumn();
+$totalRespondents = (int) $stmt->fetchColumn();
 
 $stmt = $pdo->prepare("SELECT * FROM survey_questions WHERE survey_id = ? ORDER BY order_index ASC");
 $stmt->execute([$surveyId]);
@@ -39,6 +39,7 @@ foreach ($resultsRows as $r) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Report — <?= e($survey['title']) ?></title>
@@ -48,10 +49,20 @@ foreach ($resultsRows as $r) {
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/pages.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/print.css">
     <style>
-        body { background: white; padding: 20px; }
-        .report-header { text-align: center; border-bottom: 2px solid var(--color-primary); padding-bottom: 15px; margin-bottom: 20px; }
+        body {
+            background: white;
+            padding: 20px;
+        }
+
+        .report-header {
+            text-align: center;
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
+
 <body>
     <div style="margin-bottom: 20px;" class="no-print">
         <button onclick="window.print()" class="btn btn-primary btn-lg">🖨️ Print / Save as PDF</button>
@@ -61,7 +72,9 @@ foreach ($resultsRows as $r) {
     <div class="report-container">
         <div class="report-header">
             <h1 class="report-title"><?= APP_SCHOOL ?></h1>
-            <h2 style="font-size: var(--font-size-xl); margin-top: 5px; color: var(--color-primary);"><?= e($survey['title']) ?></h2>
+            <h2 style="font-size: var(--font-size-xl); margin-top: 5px; color: var(--color-primary);">
+                <?= e($survey['title']) ?>
+            </h2>
             <div class="report-meta">
                 <span>Category: <strong><?= e($survey['category']) ?></strong></span>
                 <span>Total Respondents: <strong><?= $totalRespondents ?></strong></span>
@@ -78,28 +91,35 @@ foreach ($resultsRows as $r) {
             <h3 class="report-section-title">2. Detailed Question Breakdown</h3>
             <?php foreach ($questions as $idx => $q): ?>
                 <div style="margin-bottom: 20px; page-break-inside: avoid;">
-                    <h4 style="font-size: var(--font-size-md); margin-bottom: 8px;">Q<?= $idx + 1 ?>: <?= e($q['question_text']) ?> (<?= getQuestionTypeLabel($q['question_type']) ?>)</h4>
-                    
-                    <?php 
+                    <h4 style="font-size: var(--font-size-md); margin-bottom: 8px;">Q<?= $idx + 1 ?>:
+                        <?= e($q['question_text']) ?> (<?= getQuestionTypeLabel($q['question_type']) ?>)
+                    </h4>
+
+                    <?php
                     $resData = $resultsByQ[$q['question_id']] ?? null;
                     $details = $resData ? json_decode($resData['computed_details'], true) : [];
                     ?>
 
                     <?php if ($q['question_type'] === 'rating'): ?>
-                        <p>Average Rating: <strong><?= number_format((float)($resData['computed_value'] ?? 0), 2) ?> / 5.00</strong></p>
+                        <p>Average Rating: <strong><?= number_format((float) ($resData['computed_value'] ?? 0), 2) ?> /
+                                5.00</strong></p>
                     <?php elseif ($q['question_type'] === 'multiple_choice' || $q['question_type'] === 'yes_no'): ?>
                         <table class="data-table">
                             <thead>
-                                <tr><th>Option</th><th>Responses</th><th>Percentage</th></tr>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Responses</th>
+                                    <th>Percentage</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <?php if (!empty($details['choices'])): ?>
                                     <?php foreach ($details['choices'] as $cName => $cInfo): ?>
-                                    <tr>
-                                        <td><?= e($cName) ?></td>
-                                        <td><?= $cInfo['count'] ?></td>
-                                        <td><?= $cInfo['percentage'] ?>%</td>
-                                    </tr>
+                                        <tr>
+                                            <td><?= e($cName) ?></td>
+                                            <td><?= $cInfo['count'] ?></td>
+                                            <td><?= $cInfo['percentage'] ?>%</td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tbody>
@@ -111,8 +131,10 @@ foreach ($resultsRows as $r) {
 
         <div class="report-section">
             <h3 class="report-section-title">3. Recommendations & Next Steps</h3>
-            <p>Based on aggregated feedback, campus administration recommends prioritizing identified concerns for facility maintenance and service improvements.</p>
+            <p>Based on aggregated feedback, campus administration recommends prioritizing identified concerns for
+                facility maintenance and service improvements.</p>
         </div>
     </div>
 </body>
+
 </html>

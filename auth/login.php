@@ -142,15 +142,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Login — <?= APP_NAME ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/variables.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/base.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/components.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/layout.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/pages.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/variables.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/base.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/components.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/layout.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/pages.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/responsive.css?v=<?= time() ?>">
 </head>
 <body>
+    <div class="ambient-blob-center"></div>
     <div class="public-layout">
         <!-- Header -->
         <header class="public-header">
@@ -200,8 +201,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group">
-                            <label for="password" class="form-label">Password <span class="required">*</span></label>
-                            <div style="position: relative;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <label for="password" class="form-label" style="margin-bottom: 0;">Password <span class="required">*</span></label>
+                                <a href="<?= BASE_URL ?>/reset-password" class="text-sm font-medium text-primary" style="font-size: var(--font-size-xs);">Forgot password?</a>
+                            </div>
+                            <div style="position: relative; margin-top: var(--space-2);">
                                 <input type="password" id="password" name="password" class="form-input" 
                                        placeholder="Enter your password" required autocomplete="current-password"
                                        style="padding-right: 44px;">

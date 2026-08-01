@@ -82,6 +82,17 @@ function getCurrentRole() {
 }
 
 /**
+ * Check if current user is a super admin
+ * @return bool
+ */
+function isSuperAdmin() {
+    return isLoggedIn() && (
+        ($_SESSION['role'] ?? '') === ROLE_SUPER_ADMIN || 
+        ($_SESSION['admin_role'] ?? '') === ROLE_SUPER_ADMIN
+    );
+}
+
+/**
  * Get current user's ID
  * @return int|null
  */

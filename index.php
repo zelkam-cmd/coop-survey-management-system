@@ -32,6 +32,12 @@ switch ($route) {
         require_once __DIR__ . '/auth/logout.php';
         break;
 
+    case 'reset-password':
+    case 'forgot-password':
+    case 'student/reset-password':
+        require_once __DIR__ . '/auth/reset_password.php';
+        break;
+
     case 'change-password':
         require_once __DIR__ . '/auth/change_password.php';
         break;
@@ -75,6 +81,7 @@ switch ($route) {
         break;
 
     case 'admin/students/add':
+    case 'admin/students/create':
         require_once __DIR__ . '/admin/students/add.php';
         break;
 
@@ -99,6 +106,7 @@ switch ($route) {
         break;
 
     case 'admin/users/add':
+    case 'admin/users/create':
         require_once __DIR__ . '/admin/users/add.php';
         break;
 
@@ -106,6 +114,9 @@ switch ($route) {
         require_once __DIR__ . '/admin/users/edit.php';
         break;
 
+    case 'admin/announcements/action':
+        require_once __DIR__ . '/admin/announcements/action.php';
+        break;
     case 'admin/profile':
         require_once __DIR__ . '/admin/profile.php';
         break;
@@ -163,9 +174,18 @@ switch ($route) {
         } elseif (preg_match('/^admin\/students\/(\d+)$/', $route, $matches)) {
             $_GET['id'] = $matches[1];
             require_once __DIR__ . '/admin/students/detail.php';
+        } elseif (preg_match('/^admin\/students\/(\d+)\/reset-password$/', $route, $matches)) {
+            $_GET['id'] = $matches[1];
+            require_once __DIR__ . '/admin/students/reset_password.php';
+        } elseif (preg_match('/^admin\/users\/(\d+)\/edit$/', $route, $matches)) {
+            $_GET['id'] = $matches[1];
+            require_once __DIR__ . '/admin/users/edit.php';
         } elseif (preg_match('/^admin\/results\/(\d+)$/', $route, $matches)) {
             $_GET['id'] = $matches[1];
             require_once __DIR__ . '/admin/results/view.php';
+        } elseif (preg_match('/^admin\/results\/(\d+)\/compute$/', $route, $matches)) {
+            $_GET['id'] = $matches[1];
+            require_once __DIR__ . '/admin/results/compute.php';
         } elseif (preg_match('/^admin\/reports\/(\d+)\/print$/', $route, $matches)) {
             $_GET['id'] = $matches[1];
             require_once __DIR__ . '/admin/reports/print.php';

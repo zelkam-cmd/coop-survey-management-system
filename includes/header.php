@@ -25,24 +25,76 @@ if ($userName) {
     <meta name="description" content="<?= APP_TAGLINE ?>">
     <title><?= htmlspecialchars($pageTitle ?? 'Dashboard') ?> — <?= APP_NAME ?></title>
     
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/variables.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/base.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/components.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/layout.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/pages.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/responsive.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/print.css">
+    <!-- CSS Cache-Busted -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/variables.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/base.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/components.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/layout.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/pages.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/responsive.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/print.css?v=<?= time() ?>">
+    <style>
+        /* GUARANTEED CRITICAL STYLES FOR INSTANT RENDERING */
+        body {
+            background-color: #C7D2FE !important;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.45) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.40) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.40) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(59, 130, 246, 0.40) 0px, transparent 50%),
+                linear-gradient(135deg, #BAE6FD 0%, #E0E7FF 40%, #F3E8FF 70%, #D1FAE5 100%) !important;
+            background-attachment: fixed !important;
+            background-size: cover !important;
+        }
+        .app-sidebar {
+            background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3) !important;
+        }
+        .app-sidebar .sidebar-brand-name { color: #FFFFFF !important; }
+        .app-sidebar .sidebar-brand-tagline { color: #38BDF8 !important; }
+        .app-sidebar .sidebar-link { color: #94A3B8 !important; }
+        .app-sidebar .sidebar-link:hover { background: rgba(255, 255, 255, 0.1) !important; color: #FFFFFF !important; }
+        .app-sidebar .sidebar-link.active { background: linear-gradient(135deg, #0284C7 0%, #2563EB 100%) !important; color: #FFFFFF !important; }
+        .app-sidebar .sidebar-link svg { color: #64748B !important; }
+        .app-sidebar .sidebar-link.active svg { color: #FFFFFF !important; }
+        .app-sidebar .sidebar-section-title { color: #64748B !important; }
+        @media (min-width: 992px) {
+            .app-main {
+                margin-left: calc(250px + 24px) !important;
+                padding-right: 24px !important;
+                width: calc(100% - 274px) !important;
+            }
+        }
+        @media (max-width: 991px) {
+            .app-main {
+                margin-left: 0 !important;
+                padding-right: 0 !important;
+                width: 100% !important;
+            }
+        }
+        .app-content {
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+        .app-header {
+            background: rgba(255, 255, 255, 0.75) !important;
+            backdrop-filter: blur(24px) !important;
+            -webkit-backdrop-filter: blur(24px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.9) !important;
+        }
+    </style>
 </head>
 <body>
+    <div class="ambient-blob-center"></div>
     <div class="app-layout">
         <!-- Sidebar -->
         <?php 

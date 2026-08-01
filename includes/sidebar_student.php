@@ -1,6 +1,6 @@
 <?php
 /**
- * CampusVoice — Student Sidebar Navigation
+ * CampusVoice — Student Sidebar Navigation (Executive Dark Glass Theme)
  */
 $currentPage = $_GET['route'] ?? '';
 ?>
@@ -43,10 +43,7 @@ $currentPage = $_GET['route'] ?? '';
                     <polyline points="10 9 9 9 8 9"></polyline>
                 </svg>
                 <span class="sidebar-link-text">Surveys</span>
-                <?php
-                // Show count of available surveys
-                if (isset($pendingSurveyCount) && $pendingSurveyCount > 0):
-                ?>
+                <?php if (isset($pendingSurveyCount) && $pendingSurveyCount > 0): ?>
                 <span class="sidebar-link-badge"><?= $pendingSurveyCount ?></span>
                 <?php endif; ?>
             </a>
@@ -87,6 +84,18 @@ $currentPage = $_GET['route'] ?? '';
                 </svg>
                 <span class="sidebar-link-text">Help Center</span>
             </a>
+        </div>
+
+        <!-- Student Status Widget (Fills Empty Sidebar Gap) -->
+        <div style="margin: 24px 12px 12px; padding: 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em;">Student Status</span>
+                <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: #38BDF8; background: rgba(56, 189, 248, 0.15); padding: 2px 8px; border-radius: 99px;">
+                    Active Student
+                </span>
+            </div>
+            <div style="font-size: 12px; font-weight: 700; color: #F8FAFC; margin-bottom: 2px;">CampusVoice Portal</div>
+            <div style="font-size: 10px; color: #94A3B8;">Voice & Feedback Active</div>
         </div>
     </nav>
     

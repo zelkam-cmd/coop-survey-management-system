@@ -1,6 +1,6 @@
 <?php
 /**
- * CampusVoice — Administrator Sidebar Navigation
+ * CampusVoice — Administrator Sidebar Navigation (Executive Dark Glass Theme)
  */
 $currentPage = $_GET['route'] ?? '';
 ?>
@@ -79,12 +79,14 @@ $currentPage = $_GET['route'] ?? '';
                 <span class="sidebar-link-text">Students</span>
             </a>
             
+            <?php if (isSuperAdmin()): ?>
             <a href="<?= BASE_URL ?>/admin/users" class="sidebar-link <?= (strpos($currentPage, 'admin/users') === 0) ? 'active' : '' ?>">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
                 <span class="sidebar-link-text">Administrators</span>
             </a>
+            <?php endif; ?>
         </div>
         
         <div class="sidebar-section">
@@ -112,6 +114,18 @@ $currentPage = $_GET['route'] ?? '';
                 </svg>
                 <span class="sidebar-link-text">Settings</span>
             </a>
+        </div>
+
+        <!-- System Health Widget (Fills Empty Sidebar Gap) -->
+        <div style="margin: 24px 12px 12px; padding: 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em;">System Status</span>
+                <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: #34D399; background: rgba(52, 211, 153, 0.15); padding: 2px 8px; border-radius: 99px;">
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #34D399; display: inline-block;"></span> Online
+                </span>
+            </div>
+            <div style="font-size: 12px; font-weight: 700; color: #F8FAFC; margin-bottom: 2px;">CampusVoice SaaS v2.4</div>
+            <div style="font-size: 10px; color: #94A3B8;">Active Database • SSL Secure</div>
         </div>
     </nav>
     

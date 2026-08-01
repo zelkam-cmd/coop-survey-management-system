@@ -3,7 +3,7 @@
  * CampusVoice — Add Administrator Account
  */
 require_once __DIR__ . '/../../includes/auth_check.php';
-requireAdmin();
+requireSuperAdmin();
 require_once __DIR__ . '/../../includes/csrf.php';
 require_once __DIR__ . '/../../utils/helpers.php';
 
@@ -61,7 +61,7 @@ require_once __DIR__ . '/../../includes/header.php';
 </div>
 
 <div style="max-width: 600px;">
-    <div class="card">
+    <div class="card glass-card">
         <div class="card-header">
             <h2 class="card-title">Add Administrator Account</h2>
         </div>

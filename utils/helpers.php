@@ -106,8 +106,9 @@ function getCategoryInfo($category) {
  * Get category badge HTML
  */
 function getCategoryBadge($category) {
-    $info = getCategoryInfo($category);
-    return '<span class="survey-card-category" style="background: ' . $info['color'] . '15; color: ' . $info['color'] . ';">' . e($category) . '</span>';
+    $catName = !empty($category) ? $category : 'General';
+    $info = getCategoryInfo($catName);
+    return '<span class="survey-card-category" style="background: ' . $info['color'] . '15; color: ' . $info['color'] . ';">' . e($catName) . '</span>';
 }
 
 /**

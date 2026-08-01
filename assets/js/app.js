@@ -19,16 +19,19 @@ function initSidebar() {
     const overlay = document.querySelector('.sidebar-overlay');
 
     if (hamburger && sidebar) {
-        hamburger.addEventListener('click', function() {
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
             sidebar.classList.toggle('active');
-            if (overlay) overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+            if (overlay) {
+                overlay.classList.toggle('active');
+            }
         });
     }
 
     if (overlay) {
         overlay.addEventListener('click', function() {
-            sidebar.classList.remove('active');
-            overlay.style.display = 'none';
+            if (sidebar) sidebar.classList.remove('active');
+            overlay.classList.remove('active');
         });
     }
 }

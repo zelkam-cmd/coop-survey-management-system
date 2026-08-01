@@ -1,40 +1,40 @@
 /**
- * CampusVoice — Chart.js Wrapper Functions
- * Uses Chart.js v4 from CDN for all analytics visualizations.
+ * CampusVoice — Chart.js Glassmorphism Styling & Wrappers
+ * High-contrast, modern SaaS dashboard charts (Plus Jakarta Sans typography).
  */
 
 // Global Chart.js default styling
 if (typeof Chart !== 'undefined') {
-    Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
-    Chart.defaults.font.size = 13;
+    Chart.defaults.font.family = "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif";
+    Chart.defaults.font.size = 12;
     Chart.defaults.color = '#64748B';
     Chart.defaults.plugins.legend.labels.usePointStyle = true;
-    Chart.defaults.plugins.legend.labels.padding = 20;
-    Chart.defaults.plugins.tooltip.backgroundColor = '#1E293B';
-    Chart.defaults.plugins.tooltip.titleFont = { weight: '600' };
-    Chart.defaults.plugins.tooltip.padding = 12;
-    Chart.defaults.plugins.tooltip.cornerRadius = 8;
+    Chart.defaults.plugins.legend.labels.padding = 16;
+    Chart.defaults.plugins.tooltip.backgroundColor = '#0F172A';
+    Chart.defaults.plugins.tooltip.titleColor = '#FFFFFF';
+    Chart.defaults.plugins.tooltip.bodyColor = '#F8FAFC';
+    Chart.defaults.plugins.tooltip.titleFont = { weight: '700', family: "'Plus Jakarta Sans', sans-serif" };
+    Chart.defaults.plugins.tooltip.padding = 10;
+    Chart.defaults.plugins.tooltip.cornerRadius = 10;
     Chart.defaults.plugins.tooltip.displayColors = true;
     Chart.defaults.plugins.tooltip.boxPadding = 6;
 }
 
-// Color palette for charts
+// Color palette for modern SaaS charts
 var chartColors = {
-    primary: '#2563EB',
-    secondary: '#059669',
-    accent: '#7C3AED',
+    primary: '#0284C7',
+    secondary: '#06B6D4',
+    accent: '#8B5CF6',
     warning: '#F59E0B',
     error: '#EF4444',
-    info: '#06B6D4',
+    success: '#10B981',
     palette: [
-        '#2563EB', '#059669', '#7C3AED', '#F59E0B', '#EF4444', 
-        '#06B6D4', '#EC4899', '#F97316', '#6366F1', '#14B8A6'
+        '#0284C7', '#06B6D4', '#8B5CF6', '#10B981', '#F59E0B', 
+        '#EF4444', '#EC4899', '#6366F1', '#14B8A6', '#F97316'
     ],
     paletteLight: [
-        'rgba(37,99,235,0.15)', 'rgba(5,150,105,0.15)', 'rgba(124,58,237,0.15)',
-        'rgba(245,158,11,0.15)', 'rgba(239,68,68,0.15)', 'rgba(6,182,212,0.15)',
-        'rgba(236,72,153,0.15)', 'rgba(249,115,22,0.15)', 'rgba(99,102,241,0.15)',
-        'rgba(20,184,166,0.15)'
+        'rgba(2,132,199,0.2)', 'rgba(6,182,212,0.2)', 'rgba(139,92,246,0.2)',
+        'rgba(16,185,129,0.2)', 'rgba(245,158,11,0.2)', 'rgba(239,68,68,0.2)'
     ]
 };
 
@@ -52,9 +52,9 @@ function createPieChart(canvasId, labels, data, options) {
             datasets: [{
                 data: data,
                 backgroundColor: chartColors.palette.slice(0, data.length),
-                borderColor: '#fff',
-                borderWidth: 2,
-                hoverOffset: 8
+                borderColor: '#ffffff',
+                borderWidth: 3,
+                hoverOffset: 6
             }]
         },
         options: {
@@ -75,7 +75,7 @@ function createPieChart(canvasId, labels, data, options) {
                     }
                 }
             },
-            cutout: (options && options.doughnut) ? '60%' : 0
+            cutout: (options && options.doughnut) ? '65%' : 0
         }
     };
 
@@ -97,21 +97,21 @@ function createBarChart(canvasId, labels, datasets, options) {
                 label: ds.label || 'Dataset ' + (i + 1),
                 data: ds.data,
                 backgroundColor: ds.color || chartColors.palette[i % chartColors.palette.length],
-                borderColor: ds.color || chartColors.palette[i % chartColors.palette.length],
+                borderColor: 'transparent',
                 borderWidth: 0,
-                borderRadius: 6,
+                borderRadius: 8,
                 borderSkipped: false
             });
         });
     } else {
         // Single dataset
         chartDatasets.push({
-            label: (options && options.label) || 'Value',
+            label: (options && options.label) || 'Responses',
             data: datasets,
             backgroundColor: chartColors.palette.slice(0, labels.length),
-            borderColor: chartColors.palette.slice(0, labels.length),
+            borderColor: 'transparent',
             borderWidth: 0,
-            borderRadius: 6,
+            borderRadius: 8,
             borderSkipped: false
         });
     }
@@ -134,7 +134,7 @@ function createBarChart(canvasId, labels, datasets, options) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    grid: { color: 'rgba(0,0,0,0.04)' },
+                    grid: { color: 'rgba(226, 232, 240, 0.6)' },
                     ticks: { 
                         precision: 0,
                         callback: function(value) {
@@ -170,13 +170,13 @@ function createLineChart(canvasId, labels, datasets, options) {
                 label: ds.label || 'Dataset ' + (i + 1),
                 data: ds.data,
                 borderColor: ds.color || chartColors.palette[i % chartColors.palette.length],
-                backgroundColor: (ds.color || chartColors.palette[i % chartColors.palette.length]).replace(')', ', 0.1)').replace('rgb', 'rgba'),
+                backgroundColor: (ds.color || chartColors.palette[i % chartColors.palette.length]).replace(')', ', 0.15)').replace('rgb', 'rgba'),
                 fill: ds.fill !== undefined ? ds.fill : true,
                 tension: 0.4,
-                pointRadius: 4,
-                pointHoverRadius: 6,
-                pointBackgroundColor: '#fff',
-                pointBorderWidth: 2
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                pointBackgroundColor: '#ffffff',
+                pointBorderWidth: 3
             });
         });
     } else {
@@ -184,13 +184,13 @@ function createLineChart(canvasId, labels, datasets, options) {
             label: (options && options.label) || 'Value',
             data: datasets,
             borderColor: chartColors.primary,
-            backgroundColor: 'rgba(37,99,235,0.08)',
+            backgroundColor: 'rgba(2, 132, 199, 0.12)',
             fill: true,
             tension: 0.4,
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#ffffff',
+            pointBorderWidth: 3,
             pointBorderColor: chartColors.primary
         });
     }
@@ -213,7 +213,7 @@ function createLineChart(canvasId, labels, datasets, options) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    grid: { color: 'rgba(0,0,0,0.04)' }
+                    grid: { color: 'rgba(226, 232, 240, 0.6)' }
                 },
                 x: {
                     grid: { display: false }
@@ -235,7 +235,7 @@ function createRatingHistogram(canvasId, distribution, options) {
     if (!ctx) return null;
 
     var labels = ['1 - Very Poor', '2 - Poor', '3 - Average', '4 - Good', '5 - Excellent'];
-    var colors = ['#EF4444', '#F97316', '#F59E0B', '#10B981', '#059669'];
+    var colors = ['#EF4444', '#F97316', '#F59E0B', '#0284C7', '#10B981'];
 
     return new Chart(ctx, {
         type: 'bar',
@@ -252,7 +252,7 @@ function createRatingHistogram(canvasId, distribution, options) {
                 ],
                 backgroundColor: colors,
                 borderWidth: 0,
-                borderRadius: 6,
+                borderRadius: 8,
                 borderSkipped: false
             }]
         },
@@ -265,7 +265,7 @@ function createRatingHistogram(canvasId, distribution, options) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    grid: { color: 'rgba(0,0,0,0.04)' },
+                    grid: { color: 'rgba(226, 232, 240, 0.6)' },
                     ticks: { precision: 0 }
                 },
                 x: {
@@ -284,8 +284,8 @@ function createGaugeChart(canvasId, value, total, options) {
     if (!ctx) return null;
 
     var percentage = total > 0 ? Math.round((value / total) * 100) : 0;
-    var color = percentage >= 75 ? chartColors.secondary : 
-                percentage >= 50 ? chartColors.warning : chartColors.error;
+    var color = percentage >= 75 ? chartColors.success : 
+                percentage >= 50 ? chartColors.primary : chartColors.warning;
 
     return new Chart(ctx, {
         type: 'doughnut',
@@ -293,7 +293,7 @@ function createGaugeChart(canvasId, value, total, options) {
             labels: ['Participated', 'Remaining'],
             datasets: [{
                 data: [value, Math.max(0, total - value)],
-                backgroundColor: [color, '#E2E8F0'],
+                backgroundColor: [color, 'rgba(226, 232, 240, 0.7)'],
                 borderWidth: 0,
                 hoverOffset: 0
             }]
@@ -301,7 +301,7 @@ function createGaugeChart(canvasId, value, total, options) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: '75%',
+            cutout: '72%',
             plugins: {
                 legend: { display: false },
                 tooltip: { enabled: false }
@@ -318,11 +318,11 @@ function createGaugeChart(canvasId, value, total, options) {
                 ctx2.textAlign = 'center';
                 ctx2.textBaseline = 'middle';
                 
-                ctx2.font = '700 24px Inter, sans-serif';
-                ctx2.fillStyle = '#1E293B';
+                ctx2.font = "800 24px 'Plus Jakarta Sans', sans-serif";
+                ctx2.fillStyle = '#0F172A';
                 ctx2.fillText(percentage + '%', centerX, centerY - 8);
                 
-                ctx2.font = '500 12px Inter, sans-serif';
+                ctx2.font = "600 12px 'Plus Jakarta Sans', sans-serif";
                 ctx2.fillStyle = '#64748B';
                 ctx2.fillText((options && options.label) || 'Participation', centerX, centerY + 14);
                 

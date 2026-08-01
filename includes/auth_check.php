@@ -42,8 +42,19 @@ function requireRole($requiredRole) {
  */
 function requireAdmin() {
     $currentRole = getCurrentRole();
+    $adminRole = $_SESSION['admin_role'] ?? null;
     
-    if ($currentRole !== ROLE_ADMIN) {
+    if ($currentRole !== ROLE_ADMIN && $currentRole !== ROLE_SUPER_ADMIN && $adminRole !== ROLE_SUPER_ADMIN) {
+        header('Location: ' . BASE_URL . '/unauthorized');
+        exit;
+    }
+}
+
+/**
+ * Require super admin role explicitly
+ */
+function requireSuperAdmin() {
+    if (!isSuperAdmin()) {
         header('Location: ' . BASE_URL . '/unauthorized');
         exit;
     }

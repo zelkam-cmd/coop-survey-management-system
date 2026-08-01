@@ -59,7 +59,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <div class="survey-form-container">
     <div class="survey-form-header">
-        <div style="margin-bottom: var(--space-2);"><?= getCategoryBadge($survey['category']) ?></div>
+        <div style="margin-bottom: var(--space-2);"><?= getCategoryBadge($survey['category'] ?? null) ?></div>
         <h2 class="survey-form-title"><?= e($survey['title']) ?></h2>
         <?php if (!empty($survey['description'])): ?>
             <p class="survey-form-description"><?= e($survey['description']) ?></p>
@@ -114,11 +114,16 @@ require_once __DIR__ . '/../includes/header.php';
                 <?php elseif ($q['question_type'] === 'rating'): ?>
                     <input type="hidden" name="answer[<?= $q['question_id'] ?>]" id="rating-input-<?= $q['question_id'] ?>" data-type="rating" value="" <?= $q['is_required'] ? 'required' : '' ?>>
                     <div class="rating-control" id="rating-control-<?= $q['question_id'] ?>">
-                        <?php for ($r = 1; $r <= 5; $r++): ?>
-                            <svg class="rating-star" data-value="<?= $r ?>" onclick="setRating(<?= $q['question_id'] ?>, <?= $r ?>)" viewBox="0 0 24 24" fill="currentColor">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                            </svg>
-                        <?php endfor; ?>
+                        <div class="rating-stars-wrapper" onmouseleave="resetRatingPreview(<?= $q['question_id'] ?>)">
+                            <?php for ($r = 1; $r <= 5; $r++): ?>
+                                <svg class="rating-star" data-value="<?= $r ?>" 
+                                     onclick="setRating(<?= $q['question_id'] ?>, <?= $r ?>)" 
+                                     onmouseenter="previewRating(<?= $q['question_id'] ?>, <?= $r ?>)" 
+                                     viewBox="0 0 24 24" fill="currentColor">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                            <?php endfor; ?>
+                        </div>
                         <span class="rating-label" id="rating-label-<?= $q['question_id'] ?>">Select a rating</span>
                     </div>
 
@@ -165,6 +170,24 @@ require_once __DIR__ . '/../includes/header.php';
         });
         document.getElementById('rating-label-' + qId).textContent = ratingLabels[val];
         updateProgress();
+    }
+
+    function previewRating(qId, val) {
+        const container = document.getElementById('rating-control-' + qId);
+        const stars = container.querySelectorAll('.rating-star');
+        stars.forEach((star, idx) => {
+            if (idx < val) {
+                star.classList.add('hovered');
+            } else {
+                star.classList.remove('hovered');
+            }
+        });
+    }
+
+    function resetRatingPreview(qId) {
+        const container = document.getElementById('rating-control-' + qId);
+        const stars = container.querySelectorAll('.rating-star');
+        stars.forEach(star => star.classList.remove('hovered'));
     }
 
     function updateProgress() {

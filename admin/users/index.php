@@ -3,7 +3,7 @@
  * CampusVoice — Administrator Account Management
  */
 require_once __DIR__ . '/../../includes/auth_check.php';
-requireAdmin();
+requireSuperAdmin();
 require_once __DIR__ . '/../../utils/helpers.php';
 
 $pdo = db();
@@ -31,7 +31,7 @@ require_once __DIR__ . '/../../includes/header.php';
     </div>
 </div>
 
-<div class="data-table-wrapper">
+<div class="data-table-wrapper glass-card">
     <div class="data-table-responsive">
         <table class="data-table">
             <thead>

@@ -66,7 +66,7 @@ require_once __DIR__ . '/../../includes/header.php';
 </div>
 
 <div style="max-width: 600px;">
-    <div class="card">
+    <div class="card glass-card">
         <div class="card-header">
             <h2 class="card-title">Add New Student Account</h2>
         </div>

@@ -60,7 +60,7 @@ require_once __DIR__ . '/../../includes/header.php';
     </div>
 </div>
 
-<div class="data-table-wrapper">
+<div class="data-table-wrapper glass-card">
     <div class="data-table-header">
         <form method="GET" class="search-bar" style="min-width: 280px;">
             <div class="search-bar-icon">

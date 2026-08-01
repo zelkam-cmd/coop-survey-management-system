@@ -15,7 +15,7 @@ function isSurveyAvailableForStudent($surveyId, $studentId) {
     
     // 1. Check survey exists, is active, and within date bounds
     $stmt = $pdo->prepare("
-        SELECT survey_id, title, status, open_date, close_date 
+        SELECT * 
         FROM surveys 
         WHERE survey_id = ?
     ");
