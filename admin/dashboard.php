@@ -197,29 +197,45 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
 
         <!-- Quick Post Announcement Widget (MOVED HERE TO MAIN COLUMN) -->
-        <div class="card" style="border-top: 4px solid var(--secondary-color, #28a745);">
-            <div class="card-header pb-0 border-0 bg-transparent">
-                <h4 class="card-title mb-0" style="padding-top: var(--space-3);"><i class="icon-edit"></i> Quick Post</h4>
-                <p class="text-muted" style="font-size: var(--font-size-xs); margin-bottom: 0;">Broadcast a message to student dashboards instantly.</p>
-            </div>
-            <div class="card-body">
-                <form action="/CampusVoice/admin/notifications.php" method="POST">
-                    <div class="form-group" style="margin-bottom: var(--space-3);">
-                        <input type="text" name="title" class="form-control" placeholder="Announcement Title" required>
-                    </div>
-                    <div class="form-group" style="margin-bottom: var(--space-3);">
-                        <textarea name="content" class="form-control" rows="3" placeholder="What do you want to tell the campus?" required></textarea>
-                    </div>
-                    <div class="form-group" style="margin-bottom: var(--space-3);">
-                        <select name="target" class="form-control">
-                            <option value="all">Target: All Users</option>
-                            <option value="students">Target: Students Only</option>
-                        </select>
-                    </div>
-                    <button type="submit" name="post_announcement" class="btn btn-primary w-100">Publish Announcement</button>
-                </form>
-            </div>
+    <div class="card-body">
+    <form action="/CampusVoice/admin/notifications.php" method="POST">
+        
+        <!-- Title Input -->
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-weight: bold; font-size: 1rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">
+                Announcement Title <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="text" name="title" class="modern-input" placeholder="e.g. New Wi-Fi Survey Available" required>
         </div>
+
+        <!-- Target Audience Dropdown -->
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-weight: 500; font-size: 0.875rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">
+                Target Audience <span style="color: #ef4444;">*</span>
+            </label>
+            <select name="target" class="modern-input" required>
+                <option value="all">All Users</option>
+                <option value="students">Students Only</option>
+            </select>
+        </div>
+
+        <!-- Content Textarea -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-weight: 500; font-size: 0.875rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">
+                Announcement Content <span style="color: #ef4444;">*</span>
+            </label>
+            <textarea name="content" class="modern-input" rows="4" placeholder="Type announcement text..." required></textarea>
+        </div>
+
+        <!-- Button container (aligned right) -->
+        <div style="display: flex; justify-content: flex-end;">
+            <button type="submit" name="post_announcement" class="btn btn-primary" style="padding: 0.6rem 1.5rem; font-weight: 500; border-radius: 6px;">
+                Post Announcement
+            </button>
+        </div>
+        
+    </form>
+</div>
     </div> <!-- End Main Column -->
 
     <!-- Sidebar Column (Right Side) -->
