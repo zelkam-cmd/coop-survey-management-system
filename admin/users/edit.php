@@ -32,12 +32,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($fullName)) {
         $error = 'Full Name is required.';
     } else {
-        $stmt = $pdo->prepare("UPDATE administrators SET full_name = ?, email = ?, role = ?, status = ? WHERE admin_id = ?");
-        $stmt->execute([$fullName, $email, $role, $status, $adminId]);
+        // NEW LOGIC: Check if new_password is filled AND user is super_admin
+        if (!empty($_POST['new_password']) && $_SESSION['role'] === 'super_admin') { {
+            
+            $hashedPassword = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+            
+            $stmt = $pdo->prepare("UPDATE administrators SET full_name = ?, email = ?, role = ?, status = ?, password_hash = ? WHERE admin_id = ?");
+            $stmt->execute([$fullName, $email, $role, $status, $hashedPassword, $adminId]);
+            
+        } else {
+            // ORIGINAL LOGIC: Update without changing the password
+            $stmt = $pdo->prepare("UPDATE administrators SET full_name = ?, email = ?, role = ?, status = ? WHERE admin_id = ?");
+            $stmt->execute([$fullName, $email, $role, $status, $adminId]);
+        }
 
         logActivity(getCurrentUserId(), ROLE_ADMIN, 'edit_admin_user', 'Updated administrator account #' . $adminId);
         setToast('Success', 'Administrator account updated!', 'success');
         redirect(BASE_URL . '/admin/users');
+        }
     }
 }
 
@@ -97,6 +109,18 @@ require_once __DIR__ . '/../../includes/header.php';
                         <option value="inactive" <?= $adminAccount['status'] === 'inactive' ? 'selected' : '' ?>>Inactive</option>
                     </select>
                 </div>
+
+
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin'): ?>
+                    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                        <label class="form-label" style="font-weight: bold;">
+                            Reset Password <span style="color: var(--danger); font-size: 0.85em;">(Head Admin Only)</span>
+                        </label>
+                        <input type="password" name="new_password" class="modern-input" placeholder="Leave blank to keep current password">
+                        <div class="form-hint" style="margin-top: 4px;">Optional: Fill this out only if you want to force change this user's password.</div>
+                    </div>
+                <?php endif; ?>
+
 
                 <div style="display: flex; gap: var(--space-3); margin-top: var(--space-6);">
                     <button type="submit" class="btn btn-primary">Save Changes</button>

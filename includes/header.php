@@ -137,7 +137,7 @@ if ($userName) {
                         <div class="header-profile dropdown-trigger">
                             <div class="header-profile-info">
                                 <div class="header-profile-name"><?= htmlspecialchars($userName ?? 'User') ?></div>
-                                <div class="header-profile-role"><?= $currentRole === ROLE_STUDENT ? 'Student' : 'Administrator' ?></div>
+                                <div class="header-profile-role"><?= $currentRole === ROLE_STUDENT ? 'Student' : ((isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin') ? 'Head Admin' : 'Administrator') ?></div>
                             </div>
                             <div class="avatar"><?= htmlspecialchars($userInitials) ?></div>
                         </div>
