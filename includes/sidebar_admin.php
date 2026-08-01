@@ -15,7 +15,7 @@ $currentPage = $_GET['route'] ?? '';
         </div>
         <div class="sidebar-brand">
             <span class="sidebar-brand-name"><?= APP_NAME ?></span>
-            <span class="sidebar-brand-tagline">Admin Panel</span>
+            <span class="sidebar-brand-tagline"><?= (isset($_SESSION['admin_role']) && $_SESSION['admin_role'] === 'super_admin') ? 'Head Admin Panel' : 'Admin Panel' ?></span>
         </div>
     </div>
     

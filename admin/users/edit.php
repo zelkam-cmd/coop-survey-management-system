@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Full Name is required.';
     } else {
         // NEW LOGIC: Check if new_password is filled AND user is super_admin
-        if (!empty($_POST['new_password']) && $_SESSION['role'] === 'super_admin') { {
+        if (!empty($_POST['new_password']) && isset($_SESSION['admin_role']) && $_SESSION['admin_role'] === 'super_admin') {
             
             $hashedPassword = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
             
@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect(BASE_URL . '/admin/users');
         }
     }
-}
 
 $pageTitle = 'Edit Administrator';
 require_once __DIR__ . '/../../includes/header.php';
@@ -111,12 +110,12 @@ require_once __DIR__ . '/../../includes/header.php';
                 </div>
 
 
-                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin'): ?>
-                    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <?php if (isset($_SESSION['admin_role']) && $_SESSION['admin_role'] === 'super_admin'): ?>
+                    <div class="form-group" style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
                         <label class="form-label" style="font-weight: bold;">
-                            Reset Password <span style="color: var(--danger); font-size: 0.85em;">(Head Admin Only)</span>
+                            Reset Password 
                         </label>
-                        <input type="password" name="new_password" class="modern-input" placeholder="Leave blank to keep current password">
+                        <input type="password" name="new_password" class="form-input" placeholder="Leave blank to keep current password">
                         <div class="form-hint" style="margin-top: 4px;">Optional: Fill this out only if you want to force change this user's password.</div>
                     </div>
                 <?php endif; ?>
