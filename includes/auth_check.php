@@ -54,9 +54,9 @@ function requireAdmin() {
  */
 function checkPasswordChange() {
     if (getCurrentRole() === ROLE_STUDENT && isset($_SESSION['must_change_password']) && $_SESSION['must_change_password']) {
-        // Allow access to change password page
-        $currentPage = basename($_SERVER['PHP_SELF']);
-        if ($currentPage !== 'change_password.php') {
+        // Allow access to change password page, or skip if the user chose not to change it now.
+        $currentRoute = isset($_GET['route']) ? trim($_GET['route'], '/') : '';
+        if ($currentRoute !== 'change-password' && empty($_SESSION['password_change_skipped'])) {
             header('Location: ' . BASE_URL . '/change-password');
             exit;
         }

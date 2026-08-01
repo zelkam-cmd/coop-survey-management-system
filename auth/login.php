@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 if ($role === ROLE_STUDENT) {
                     $_SESSION['must_change_password'] = $userData['must_change_password'];
+                    unset($_SESSION['password_change_skipped']);
                 }
                 
                 if ($role === ROLE_ADMIN) {

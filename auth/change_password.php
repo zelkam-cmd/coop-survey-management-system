@@ -15,6 +15,22 @@ $isForced = isset($_SESSION['must_change_password']) && $_SESSION['must_change_p
 // Handle POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     requireCSRF();
+
+    if ($isForced && isset($_POST['skip_change'])) {
+        $pdo = db();
+        $userId = getCurrentUserId();
+
+        $stmt = $pdo->prepare("UPDATE students SET must_change_password = 0 WHERE student_id = ?");
+        $stmt->execute([$userId]);
+
+        $_SESSION['must_change_password'] = false;
+        $_SESSION['password_change_skipped'] = true;
+
+        logActivity($userId, ROLE_STUDENT, 'skip_password_change', 'Chose to continue with the default password');
+        setToast('Notice', 'You can continue using the default password and update it later from your profile.', 'info');
+
+        redirect(BASE_URL . '/student/dashboard');
+    }
     
     $currentPassword = $_POST['current_password'] ?? '';
     $newPassword = $_POST['new_password'] ?? '';
@@ -110,7 +126,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <div class="alert-icon">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                 </div>
-                <span>For security, you must change your password before continuing.</span>
+                <span>We recommend changing your password now for better security. You may continue with the default password and update it later from your profile.</span>
             </div>
             <?php endif; ?>
 
@@ -155,6 +171,13 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php endif; ?>
                 </div>
             </form>
+
+            <?php if ($isForced): ?>
+            <form method="POST" style="margin-top: var(--space-4); display: inline-block;">
+                <?php csrfField(); ?>
+                <button type="submit" name="skip_change" class="btn btn-secondary">Continue without changing</button>
+            </form>
+            <?php endif; ?>
         </div>
     </div>
 </div>

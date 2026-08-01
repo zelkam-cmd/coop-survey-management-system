@@ -74,8 +74,20 @@ switch ($route) {
         require_once __DIR__ . '/admin/students/index.php';
         break;
 
+    case 'admin/students/add':
+        require_once __DIR__ . '/admin/students/add.php';
+        break;
+
+    case 'admin/students/reset_password':
+        require_once __DIR__ . '/admin/students/reset_password.php';
+        break;
+
     case 'admin/results':
         require_once __DIR__ . '/admin/results/index.php';
+        break;
+
+    case 'admin/results/compute':
+        require_once __DIR__ . '/admin/results/compute.php';
         break;
 
     case 'admin/reports':
@@ -84,6 +96,14 @@ switch ($route) {
 
     case 'admin/users':
         require_once __DIR__ . '/admin/users/index.php';
+        break;
+
+    case 'admin/users/add':
+        require_once __DIR__ . '/admin/users/add.php';
+        break;
+
+    case 'admin/users/edit':
+        require_once __DIR__ . '/admin/users/edit.php';
         break;
 
     case 'admin/profile':
