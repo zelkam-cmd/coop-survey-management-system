@@ -180,6 +180,7 @@
     justify-content: space-between !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
     cursor: pointer;
+    height: 100% !important; /* ADD THIS LINE */
 }
 
 .survey-card:hover {
@@ -227,6 +228,7 @@
     justify-content: space-between;
     padding-top: 14px;
     border-top: 1px solid rgba(226, 232, 240, 0.8);
+    margin-top: auto !important; /* ADD THIS LINE */
 }
 
 /* ── Buttons (Pill-Shaped SaaS Buttons) ──────────────────── */
