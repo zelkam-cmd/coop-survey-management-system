@@ -130,7 +130,7 @@ require_once __DIR__ . '/../includes/header.php';
                 Create Survey</a>
             <button type="button" class="btn" onclick="openAnnouncementModal()"
                 style="background: rgba(255,255,255,0.25); color: white; font-weight: 800; padding: 12px 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.4);">📢
-                New Announcement</button>
+                + Create Announcement</button>
         </div>
     </div>
 </div>

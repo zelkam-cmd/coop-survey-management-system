@@ -49,7 +49,7 @@ require_once __DIR__ . '/../includes/header.php';
         <p class="content-subtitle">Post global announcements to student dashboards</p>
     </div>
     <div class="content-actions">
-        <button class="btn btn-primary" onclick="openModal('add-announcement-modal')">+ New Announcement</button>
+        <button class="btn btn-primary" onclick="openModal('add-announcement-modal')">+ Create Announcement</button>
     </div>
 </div>
 
@@ -89,7 +89,7 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="modal-overlay" id="add-announcement-modal">
     <div class="modal">
         <div class="modal-header">
-            <h3 class="modal-title">Post New Announcement</h3>
+            <h3 class="modal-title">Post Announcement</h3>
             <button class="modal-close" data-modal-close="add-announcement-modal">✕</button>
         </div>
         <form method="POST">
@@ -97,7 +97,7 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="modal-body">
                 <div class="form-group">
                     <label for="ann_title" class="form-label">Title <span class="required">*</span></label>
-                    <input type="text" id="ann_title" name="title" class="form-input" required placeholder="e.g. New Wi-Fi Survey Available">
+                    <input type="text" id="ann_title" name="title" class="form-input" required placeholder="e.g. Wi-Fi Survey Available">
                 </div>
 
                 <div class="form-group">
