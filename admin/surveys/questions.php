@@ -70,11 +70,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } elseif ($action === 'delete_question') {
         $deleteQId = (int)($_POST['question_id'] ?? 0);
-        $stmt = $pdo->prepare("DELETE FROM survey_questions WHERE question_id = ? AND survey_id = ?");
-        $stmt->execute([$deleteQId, $surveyId]);
+        if ($deleteQId > 0) {
+            try {
+                $pdo->beginTransaction();
 
-        logActivity(getCurrentUserId(), ROLE_ADMIN, 'delete_question', 'Deleted question #' . $deleteQId, 'survey', $surveyId);
-        setToast('Success', 'Question deleted successfully!', 'success');
+                // Delete associated student responses
+                $stmtRes = $pdo->prepare("DELETE FROM responses WHERE question_id = ?");
+                $stmtRes->execute([$deleteQId]);
+
+                // Delete computed survey results
+                $stmtSR = $pdo->prepare("DELETE FROM survey_results WHERE question_id = ?");
+                $stmtSR->execute([$deleteQId]);
+
+                // Delete associated survey choices
+                $stmtChoices = $pdo->prepare("DELETE FROM survey_choices WHERE question_id = ?");
+                $stmtChoices->execute([$deleteQId]);
+
+                // Delete the question
+                $stmt = $pdo->prepare("DELETE FROM survey_questions WHERE question_id = ? AND survey_id = ?");
+                $stmt->execute([$deleteQId, $surveyId]);
+
+                $pdo->commit();
+
+                logActivity(getCurrentUserId(), ROLE_ADMIN, 'delete_question', 'Deleted question #' . $deleteQId, 'survey', $surveyId);
+                setToast('Success', 'Question deleted successfully!', 'success');
+            } catch (Exception $e) {
+                if ($pdo->inTransaction()) {
+                    $pdo->rollBack();
+                }
+                error_log("Failed to delete question #{$deleteQId}: " . $e->getMessage());
+                setToast('Error', 'Failed to delete question. Please try again.', 'error');
+            }
+        }
         redirect(BASE_URL . '/admin/surveys/' . $surveyId . '/questions');
     }
 }

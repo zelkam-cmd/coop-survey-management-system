@@ -35,9 +35,9 @@ function getDBConnection() {
             // Log error but don't expose details to users
             error_log("Database Connection Error: " . $e->getMessage());
             
-            // Redirect to error page if available
+            // Render error page directly if available
             if (file_exists(__DIR__ . '/../system-pages/error.php')) {
-                header('Location: /system-pages/error.php');
+                require_once __DIR__ . '/../system-pages/error.php';
                 exit;
             }
             

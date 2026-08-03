@@ -72,11 +72,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case 'delete':
             $announcementId = (int)($_POST['announcement_id'] ?? 0);
             if ($announcementId > 0) {
-                $stmt = $pdo->prepare("DELETE FROM announcements WHERE announcement_id = ?");
-                $stmt->execute([$announcementId]);
+                try {
+                    $stmt = $pdo->prepare("DELETE FROM announcements WHERE announcement_id = ?");
+                    $stmt->execute([$announcementId]);
 
-                logActivity($adminId, ROLE_ADMIN, 'delete_announcement', 'Deleted announcement #' . $announcementId, 'announcement', $announcementId);
-                setToast('Success', 'Announcement deleted successfully!', 'success');
+                    logActivity($adminId, ROLE_ADMIN, 'delete_announcement', 'Deleted announcement #' . $announcementId, 'announcement', $announcementId);
+                    setToast('Success', 'Announcement deleted successfully!', 'success');
+                } catch (Exception $e) {
+                    error_log("Failed to delete announcement #{$announcementId}: " . $e->getMessage());
+                    setToast('Error', 'Failed to delete announcement.', 'error');
+                }
             }
             break;
     }
