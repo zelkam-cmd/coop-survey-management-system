@@ -216,7 +216,7 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="card-header">
                 <h3 class="card-title">📢 Campus Announcements</h3>
             </div>
-            <div class="card-body" style="padding: 0;">
+            <div class="card-body" id="student-announcements-container" style="padding: 16px;">
                 <?php if (empty($announcements)): ?>
                     <div style="text-align: center; padding: 24px; color: var(--color-text-tertiary);">
                         <p style="font-size: var(--font-size-xs);">No active announcements at this time.</p>

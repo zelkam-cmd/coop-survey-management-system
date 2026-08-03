@@ -31,7 +31,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <div class="card">
-    <div class="card-body">
+    <div class="card-body" id="student-notifications-feed">
         <?php if (empty($announcements)): ?>
             <div class="empty-state">
                 <div class="empty-state-icon">

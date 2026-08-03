@@ -133,6 +133,12 @@ switch ($route) {
         require_once __DIR__ . '/admin/activity_logs.php';
         break;
 
+    // ── API Endpoints ────────────────────────────────────
+    case 'api/live-updates':
+    case 'api/announcements':
+        require_once __DIR__ . '/api/live_updates.php';
+        break;
+
     // ── System Pages ────────────────────────────────────
     case '401':
     case 'unauthorized':

@@ -227,7 +227,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <button type="button" class="btn btn-primary btn-sm" onclick="openAnnouncementModal()">+ Create
                     Announcement</button>
             </div>
-            <div class="card-body" style="padding: 0;">
+            <div class="card-body" id="admin-announcements-container" style="padding: 16px;">
                 <?php if (empty($allAnnouncements)): ?>
                     <div style="text-align: center; padding: 32px; color: var(--color-text-tertiary);">
                         <p>No announcements created yet.</p>

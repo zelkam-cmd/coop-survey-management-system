@@ -13,10 +13,14 @@
     <!-- Toast Container -->
     <div class="toast-container"></div>
     
+    <!-- Global BASE_URL for AJAX Scripts -->
+    <script>window.BASE_URL = '<?= BASE_URL ?>';</script>
+    
     <!-- JavaScript -->
     <script src="<?= BASE_URL ?>/assets/js/app.js"></script>
     <script src="<?= BASE_URL ?>/assets/js/validation.js"></script>
     <script src="<?= BASE_URL ?>/assets/js/charts.js"></script>
+    <script src="<?= BASE_URL ?>/assets/js/realtime.js?v=<?= time() ?>"></script>
     
     <?php if (isset($_SESSION['toast_message'])): ?>
     <script>

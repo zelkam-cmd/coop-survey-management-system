@@ -33,6 +33,9 @@ if ($userName) {
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     
+    <!-- jQuery CDN for Real-Time AJAX Updates -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
     <!-- CSS Cache-Busted -->
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/variables.css?v=<?= time() ?>">
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/base.css?v=<?= time() ?>">
